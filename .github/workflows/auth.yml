@@ -12,7 +12,7 @@ on:
 env:
   GITHUB_SHA: ${{ github.sha }} 
   GITHUB_REF: ${{ github.ref }} 
-  REGISTRY_HOSTNAME: gcr.io
+  REGISTRY_HOSTNAME: us-west1-docker.pkg.dev/loyal-weaver-339004/istio-practice
 
 jobs:
   build_and_test:
@@ -44,5 +44,5 @@ jobs:
       - name: Push Docker Image
         run: |
           export TAG=`echo $GITHUB_REF | awk -F/ '{print $NF}'`
-          docker tag auth_api "$REGISTRY_HOSTNAME/loyal-weaver-339004/istio-practice/auth_api:$TAG"
-          docker push "$REGISTRY_HOSTNAME/loyal-weaver-339004/istio-practice/auth_api:$TAG"
+          docker tag auth_api "$REGISTRY_HOSTNAME/auth_api:$TAG"
+          docker push "$REGISTRY_HOSTNAME/auth_api:$TAG"
