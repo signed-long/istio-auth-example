@@ -3,15 +3,16 @@ version: '3.3'
 services:
   auth_api_test:
     build: ../../
-    command: entrypoint.sh
+    command: bash tests/docker/entrypoint.sh
     container_name: auth_api_test
     environment:
       - FLASK_APP=app/__init__.py
       - FLASK_ENV=testing
-      - DATABASE_URL=postgresql://test_db:test_db@db:5432/test_db
       - SQL_HOST=db
       - SQL_PORT=5432
-      - DATABASE=postgres
+      - DATABASE=test_db
+      - DATABASE_USER=test_db
+      - DATABASE_PASSWORD=test_db
       - ACCESS_TOKEN_EXP_SEC=5
       - ACCESS_TOKEN_ISS=example.com
       - |

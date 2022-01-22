@@ -9,6 +9,9 @@ RUN pip install --upgrade pip
 COPY ./Pipfile .
 RUN PIPENV_VENV_IN_PROJECT=1 pipenv install --deploy
 
+# install system dependencies
+RUN apt-get update && apt-get install -y netcat
+
 FROM builder as final
 
 # Grab packages from builder
