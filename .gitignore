@@ -6,6 +6,8 @@ __pycache__/
 TODO
 keys/
 .DS_Store
+secrets.yaml
+secrets.yml
 
 # C extensions
 *.so
