@@ -1,6 +1,6 @@
 
 
-def test_liveness_probes(test_client, init_database):
+def test_liveness_probes(test_client):
     '''
     Tests the liveness and readiness probes.
     '''

@@ -8,10 +8,10 @@ def test_hello_routes(test_client):
         '/public/hello',
         content_type='application/json',
     )
-    assert response.status_code == 201
+    assert response.status_code == 200
 
     response = test_client.get(
         '/private/hello',
         content_type='application/json',
     )
-    assert response.status_code == 201
+    assert response.status_code == 200
