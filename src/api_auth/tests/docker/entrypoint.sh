@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ "$DATABASE" = "postgres" ]
+if [ "$FLASK_ENV" = "testing" ]
 then
     echo "Waiting for postgres..."
 
