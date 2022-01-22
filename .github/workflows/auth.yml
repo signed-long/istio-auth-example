@@ -1,0 +1,19 @@
+name: "api_auth"
+
+on:
+  push:
+    # run only on changes to these paths
+    paths:
+      - "src/api_auth/**"
+      - ".github/workflows/auth.yaml"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      # run tests for api_auth
+      - name: Run tests
+        run: |-
+          docker-compose -f ./src/api_auth/docker-compose.tests.yml up --exit-code-from auth --build

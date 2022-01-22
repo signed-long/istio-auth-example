@@ -1,0 +1,53 @@
+ServiceName: auth
+hasDatabase: true
+
+# Image info
+image:
+  repository: auth-image
+  tag: latest
+  pullPolicy: IfNotPresent
+
+# Env variables
+env:
+    - name: FLASK_APP
+      value: app/__init__.py
+    - name: FLASK_ENV
+      value: development
+    - name: SQL_HOST
+      value: db-postgresql-tor1-94511-do-user-9591008-0.b.db.ondigitalocean.com
+    - name: SQL_PORT
+      value: 25060
+    - name: DATABASE
+      value: defaultdb
+    - name: DATABASE_USER
+      value: doadmin
+    - name: ACCESS_TOKEN_EXP_SEC
+      value: 900 # access token expires in 15 mins
+    - name: ACCESS_TOKEN_ISS
+      value: example.com
+
+# Secrets specific to this application, to be passed in as env variables
+appSecrets:
+  - secretName: database-password
+    envName: DATABASE_PASSWORD
+    type: Opaque
+    keyName: password
+    value: RVFPeGZjSmIyTTJreXFSYg==
+  # - secretName: access-token-private-key
+  #   envName: ACCESS_TOKEN_PRIVATE_KEY
+  #   type: Opaque
+  #   keyName: private-key
+  #   value: >-
+  #     <base64 private key here>
+
+# Secrets specific to this application, to be passed in as env variables
+migrationSecrets:
+  # - secretName: migration-database-password
+  #   envName: DATABASE_PASSWORD
+  #   type: Opaque
+  #   keyName: password
+  #   value: <base64 db password here>
+
+migrationJob:
+  ## Should the job be rescheduled on the same node if it fails, or just stopped
+  restartPolicy: Never

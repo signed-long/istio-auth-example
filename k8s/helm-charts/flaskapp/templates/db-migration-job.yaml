@@ -1,0 +1,44 @@
+{{ if .Values.hasDatabase }}
+---
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-{{ .Chart.Name }}-migration-job
+  labels:
+    app: {{ .Release.Name }}-{{ .Chart.Name }}
+    chart: '{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}'
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-weight": "3"
+    "helm.sh/hook-delete-policy": hook-failed, hook-succeeded
+spec:
+  backoffLimit: 1
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-{{ .Chart.Name }}
+      annotations:
+            sidecar.istio.io/inject: "false"
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        command: ["/bin/bash", "-c"]
+        args: ["flask db upgrade"]
+        env: # get secret env vars
+          {{- range .Values.migrationSecrets }}
+          - name: {{ .envName }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ .secretName }}
+                key: {{ .keyName }}
+          {{- end }}
+          {{- range .Values.env }}
+          - name: {{ .name }}
+            value: {{ .value | quote }}
+          {{- end }}
+
+      restartPolicy: {{ .Values.migrationJob.restartPolicy }}
+{{ end }}

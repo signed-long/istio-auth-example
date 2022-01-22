@@ -1,0 +1,30 @@
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: auth-routes
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - auth-example-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /auth
+    route:
+    - destination:
+        port:
+          number: 80
+        host: auth-flaskapp-service
+  - match:
+    - uri:
+        prefix: /private
+    - uri:
+        prefix: /public
+    route:
+    - destination:
+        port:
+          number: 80
+        host: test-flaskapp-service

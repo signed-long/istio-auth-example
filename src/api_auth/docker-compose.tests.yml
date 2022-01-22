@@ -1,0 +1,75 @@
+
+version: '3.3'
+services:
+  auth:
+    build: ./
+    command: pipenv run pytest
+    container_name: auth
+    environment:
+      - FLASK_APP=app/__init__.py
+      - FLASK_ENV=testing
+      - DATABASE_URL=postgresql://test_db:test_db@db:5432/test_db
+      - SQL_HOST=db
+      - SQL_PORT=5432
+      - DATABASE=postgres
+      - ACCESS_TOKEN_EXP_SEC=5
+      - ACCESS_TOKEN_ISS=example.com
+      - |
+        ACCESS_TOKEN_PRIVATE_KEY=-----BEGIN RSA PRIVATE KEY-----
+        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
+        -----END RSA PRIVATE KEY-----
+      - |
+        ACCESS_TOKEN_PUBLIC_KEY=-----BEGIN RSA PUBLIC KEY-----
+        MIIBigKCAYEAuBctOQ0DQUMc0YLpFDc4t3Okbw9eEQiYKIFoAnLGJFNX0B6YPnCz
+        CEUJgl8aVDcqkA4l46kZc15icDBpFdAeg6zfDpCK1EnaaVgMMlm21hlyUDGW24Nv
+        CfMc4VnGbMM2EpGkpKo6ch0tK5tCTf5sKb+6SuEDjyp2Ezt0GCix1dxCTGCvayIt
+        wfVFyH40gcYHoA0czlxEN4BQYwbx3w3Tw6MJZdP3l2YUZf55YAxKkYjh75jJ+x6+
+        hUj+8DCK4pKB0UnzsFuYdAoa0/pCyzPIe/P1caaoDW3XyclRudcwehn63cWdIHDk
+        voxfaAbX7arFkQByzaEGSg+CPc9x8mwc9yAz/3P6oRG75gKeWpCGLsrLcneExuDR
+        qqHI1e0eK2H2zo2qm8BMkIonMoh4wQN/22UvyOWBs5IwHy8/QSH01BwmpITAddnp
+        JV3q3NT/Si66x9/iBYuXBojSf/U1VL+bk4E0trTVky2CUVpO8PxrO98GGH0xBRyS
+        OIRdSNwKdbzjAgMBAAE=
+        -----END RSA PUBLIC KEY-----    
+  db:
+    image: postgres:13-alpine
+    environment:
+      - POSTGRES_USER=test_db
+      - POSTGRES_PASSWORD=test_db
+      - POSTGRES_DB=test_db
+    container_name: db
