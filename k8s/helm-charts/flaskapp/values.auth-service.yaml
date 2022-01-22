@@ -3,8 +3,7 @@ hasDatabase: true
 
 # Image info
 image:
-  repository: auth-image
-  tag: latest
+  tag: auth-image
   pullPolicy: IfNotPresent
 
 # Env variables
