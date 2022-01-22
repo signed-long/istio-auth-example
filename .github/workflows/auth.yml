@@ -20,13 +20,14 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
-      # run tests for api_auth
+      # Build and test image using docker compose
       - name: Run tests
         run: |-
           docker-compose -f ./src/api_auth/tests/docker/docker-compose.tests.yml up --exit-code-from auth_api --build
-  
-      - id: 'auth'
-        name: 'Authenticate to GCP'
+
+      # Authenticate to GCP
+      - name: 'Authenticate to GCP'
+        id: 'auth'
         uses: 'google-github-actions/auth@v0'
         with:
           credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
@@ -39,13 +40,9 @@ jobs:
         run: |
           gcloud auth configure-docker -q
 
-      - name: List images
-        run: |
-          docker images
-
       # Push image to Google Container Registry
       - name: Push Docker Image
         run: |
           export TAG=`echo $GITHUB_REF | awk -F/ '{print $NF}'`
-          docker tag docker_auth_api "$REGISTRY_HOSTNAME/istio-practice/auth_api:$TAG"
+          docker tag auth_api "$REGISTRY_HOSTNAME/istio-practice/auth_api:$TAG"
           docker push "$REGISTRY_HOSTNAME/istio-practice/auth_api:$TAG"
