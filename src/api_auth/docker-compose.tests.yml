@@ -1,10 +1,10 @@
 
 version: '3.3'
 services:
-  auth:
+  auth_api_test:
     build: ./
     command: pipenv run pytest
-    container_name: auth
+    container_name: auth_api_test
     environment:
       - FLASK_APP=app/__init__.py
       - FLASK_ENV=testing
