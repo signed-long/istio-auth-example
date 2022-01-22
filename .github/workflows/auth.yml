@@ -12,7 +12,7 @@ on:
 env:
   GITHUB_SHA: ${{ github.sha }} 
   GITHUB_REF: ${{ github.ref }} 
-  REGISTRY_HOSTNAME: us-west1-docker.pkg.dev/loyal-weaver-339004/istio-practice
+  REGISTRY_HOSTNAME: gcr.io/loyal-weaver-339004/istio-practice 
 
 jobs:
   build_and_test:
