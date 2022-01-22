@@ -7,7 +7,7 @@ on:
     # run only on changes to these paths
     paths:
       - "src/api_test/**"
-      - ".github/workflows/auth.yml"
+      - ".github/workflows/test.yml"
 
 env:
   GITHUB_SHA: ${{ github.sha }} 
