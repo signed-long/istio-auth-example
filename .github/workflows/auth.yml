@@ -10,7 +10,7 @@ on:
       - ".github/workflows/auth.yml"
 
 jobs:
-  test:
+  build_and_test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -19,3 +19,25 @@ jobs:
       - name: Run tests
         run: |-
           docker-compose -f ./src/api_auth/tests/docker/docker-compose.tests.yml up --exit-code-from auth_api_test --build
+  
+  push:
+    needs: build_and_test
+    runs-on: ubuntu-latest
+    steps:
+    - id: 'auth'
+      uses: 'google-github-actions/auth@v0'
+      with:
+        credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+
+    - name: 'Set up Cloud SDK'
+      uses: 'google-github-actions/setup-gcloud@v0'
+        
+    # Configure docker to use the gcloud command-line tool as a credential helper
+    - run: |
+        gcloud auth configure-docker -q
+
+    # Push image to Google Container Registry
+    - name: Build
+      run: |-
+        docker images
+

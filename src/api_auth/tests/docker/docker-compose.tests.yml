@@ -1,7 +1,7 @@
 
 version: '3.3'
 services:
-  auth_api_test:
+  auth_api:
     build: ../../
     command: bash tests/docker/entrypoint.sh
     container_name: auth_api_test
