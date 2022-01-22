@@ -1,0 +1,10 @@
+
+version: '3.3'
+services:
+  api_test:
+    build: ../../
+    command: bash tests/docker/entrypoint.sh
+    image: api_test
+    environment:
+      - FLASK_APP=app/__init__.py
+      - FLASK_ENV=testing

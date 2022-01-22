@@ -25,3 +25,19 @@ def private():
     '''
     msg = "OK 200: Hello authenticated"
     return make_json_response(status=200, msg=msg)
+
+
+@routes.route("/readiness", methods=["POST"])
+def readiness_probe():
+    '''
+
+    '''
+    return make_response("ready :D", 200)
+
+
+@routes.route("/liveness", methods=["POST"])
+def liveness_probe():
+    '''
+
+    '''
+    return make_response("live :D", 200)

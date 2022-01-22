@@ -23,7 +23,7 @@ jobs:
       # Build and test image using docker compose
       - name: Run tests
         run: |-
-          docker build src/api_test/Dockerfile -t api_test
+          docker-compose -f ./src/api_test/tests/docker/docker-compose.tests.yml up --exit-code-from api_test --build
 
       # Authenticate to GCP
       - name: 'Authenticate to GCP'
