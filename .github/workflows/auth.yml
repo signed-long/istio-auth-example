@@ -44,5 +44,5 @@ jobs:
       - name: Push Docker Image
         run: |
           export TAG=`echo $GITHUB_REF | awk -F/ '{print $NF}'`
-          docker tag auth_api "$REGISTRY_HOSTNAME/istio-practice/auth_api:$TAG"
-          docker push "$REGISTRY_HOSTNAME/istio-practice/auth_api:$TAG"
+          docker tag auth_api "$REGISTRY_HOSTNAME/loyal-weaver-339004/istio-practice/auth_api:$TAG"
+          docker push "$REGISTRY_HOSTNAME/loyal-weaver-339004/istio-practice/auth_api:$TAG"
