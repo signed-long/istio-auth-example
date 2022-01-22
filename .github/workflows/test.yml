@@ -1,0 +1,48 @@
+name: "api_test"
+
+on:
+  push:
+    branches:
+      - main 
+    # run only on changes to these paths
+    paths:
+      - "src/api_test/**"
+      - ".github/workflows/auth.yml"
+
+env:
+  GITHUB_SHA: ${{ github.sha }} 
+  GITHUB_REF: ${{ github.ref }} 
+  REGISTRY_HOSTNAME: gcr.io/loyal-weaver-339004/istio-practice 
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      # Build and test image using docker compose
+      - name: Run tests
+        run: |-
+          docker build src/api_test/Dockerfile -t api_test
+
+      # Authenticate to GCP
+      - name: 'Authenticate to GCP'
+        id: 'auth'
+        uses: 'google-github-actions/auth@v0'
+        with:
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v0'
+          
+      # Configure docker to use the gcloud command-line tool as a credential helper
+      - name: 'Login to docker with gcloud'
+        run: |
+          gcloud auth configure-docker -q
+
+      # Push image to Google Container Registry
+      - name: Push Docker Image
+        run: |
+          export TAG=`echo $GITHUB_REF | awk -F/ '{print $NF}'`
+          docker tag api_test "$REGISTRY_HOSTNAME/api_test:$TAG"
+          docker push "$REGISTRY_HOSTNAME/api_test:$TAG"
