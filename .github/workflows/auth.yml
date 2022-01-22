@@ -15,7 +15,7 @@ env:
   REGISTRY_HOSTNAME: gcr.io/loyal-weaver-339004/istio-practice 
 
 jobs:
-  build_and_test:
+  build_test_push:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
