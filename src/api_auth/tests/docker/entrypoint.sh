@@ -11,4 +11,5 @@ then
     echo "PostgreSQL started"
 fi
 
-pipenv run pytest
+source /.venv/bin/activate
+python -m pytest
