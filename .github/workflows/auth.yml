@@ -39,6 +39,10 @@ jobs:
         run: |
           gcloud auth configure-docker -q
 
+      - name: List images
+        run: |
+          docker images
+
       # Push image to Google Container Registry
       - name: Push Docker Image
         run: |
