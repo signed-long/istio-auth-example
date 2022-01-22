@@ -4,7 +4,6 @@ services:
   auth_api:
     build: ../../
     command: bash tests/docker/entrypoint.sh
-    container_name: auth_api_test
     image: auth_api
     environment:
       - FLASK_APP=app/__init__.py
@@ -70,8 +69,8 @@ services:
         -----END RSA PUBLIC KEY-----    
   db:
     image: postgres:13-alpine
+    container_name: db
     environment:
       - POSTGRES_USER=test_db
       - POSTGRES_PASSWORD=test_db
       - POSTGRES_DB=test_db
-    container_name: db

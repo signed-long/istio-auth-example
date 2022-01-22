@@ -1,4 +1,4 @@
-from flask import Blueprint, request, abort
+from flask import Blueprint, request, abort, make_response
 from flask_expects_json import expects_json
 from os import environ
 from app import db
@@ -65,3 +65,23 @@ def login():
 
     # user does not exist or entered bad credentials
     abort(401)
+
+
+@routes.route("/readiness", methods=["POST"])
+def readiness_probe():
+    '''
+
+    '''
+    try:
+        db.engine.execute('SELECT 1')
+        return make_response("ready :D", 200)
+    except Exception as e:
+        return make_response("not ready x_x", 500)
+
+
+@routes.route("/liveness", methods=["POST"])
+def liveness_probe():
+    '''
+
+    '''
+    return make_response("live :D", 200)
