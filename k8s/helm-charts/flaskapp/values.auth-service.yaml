@@ -28,11 +28,11 @@ env:
 
 # Secrets specific to this application, to be passed in as env variables
 appSecrets:
-  - secretName: database-password
-    envName: DATABASE_PASSWORD
-    type: Opaque
-    keyName: password
-    value: RVFPeGZjSmIyTTJreXFSYg==
+  # - secretName: database-password
+  #   envName: DATABASE_PASSWORD
+  #   type: Opaque
+  #   keyName: password
+  #   value: <base64 db password here>
   # - secretName: access-token-private-key
   #   envName: ACCESS_TOKEN_PRIVATE_KEY
   #   type: Opaque
