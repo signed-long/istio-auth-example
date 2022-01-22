@@ -9,6 +9,11 @@ on:
       - "src/api_auth/**"
       - ".github/workflows/auth.yml"
 
+env:
+  GITHUB_SHA: ${{ github.sha }} 
+  GITHUB_REF: ${{ github.ref }} 
+  REGISTRY_HOSTNAME: gcr.io
+
 jobs:
   build_and_test:
     runs-on: ubuntu-latest
@@ -21,6 +26,7 @@ jobs:
           docker-compose -f ./src/api_auth/tests/docker/docker-compose.tests.yml up --exit-code-from auth_api --build
   
       - id: 'auth'
+        name: 'Authenticate to GCP'
         uses: 'google-github-actions/auth@v0'
         with:
           credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
@@ -29,11 +35,13 @@ jobs:
         uses: 'google-github-actions/setup-gcloud@v0'
           
       # Configure docker to use the gcloud command-line tool as a credential helper
-      - run: |
+      - name: 'Login to docker with gcloud'
+        run: |
           gcloud auth configure-docker -q
 
       # Push image to Google Container Registry
-      - name: Build
-        run: |-
-          docker images
-
+      - name: Push Docker Image
+        run: |
+          export TAG=`echo $GITHUB_REF | awk -F/ '{print $NF}'`
+          docker tag docker_auth_api "$REGISTRY_HOSTNAME/istio-practice/auth_api:$TAG"
+          docker push "$REGISTRY_HOSTNAME/istio-practice/auth_api:$TAG"
