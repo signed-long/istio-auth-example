@@ -2,6 +2,8 @@ name: "api_auth"
 
 on:
   push:
+    branches:
+      - main 
     # run only on changes to these paths
     paths:
       - "src/api_auth/**"
