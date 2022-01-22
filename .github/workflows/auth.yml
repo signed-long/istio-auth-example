@@ -23,7 +23,7 @@ jobs:
       # Build and test image using docker compose
       - name: Run tests
         run: |-
-          docker-compose -f ./src/api_auth/tests/docker/docker-compose.tests.yml up --exit-code-from auth_api --build
+          docker-compose -f ./src/api_auth/tests/docker/docker-compose.tests.yml up --exit-code-from api_auth --build
 
       # Authenticate to GCP
       - name: 'Authenticate to GCP'
@@ -44,5 +44,5 @@ jobs:
       - name: Push Docker Image
         run: |
           export TAG=`echo $GITHUB_REF | awk -F/ '{print $NF}'`
-          docker tag auth_api "$REGISTRY_HOSTNAME/auth_api:$TAG"
-          docker push "$REGISTRY_HOSTNAME/auth_api:$TAG"
+          docker tag api_auth "$REGISTRY_HOSTNAME/api_auth:$TAG"
+          docker push "$REGISTRY_HOSTNAME/api_auth:$TAG"
