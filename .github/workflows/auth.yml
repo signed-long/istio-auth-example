@@ -18,7 +18,7 @@ jobs:
       # run tests for api_auth
       - name: Run tests
         run: |-
-          docker-compose -f ./src/api_auth/tests/docker/docker-compose.tests.yml up --exit-code-from auth_api_test --build
+          docker-compose -f ./src/api_auth/tests/docker/docker-compose.tests.yml up --exit-code-from auth_api --build
   
   push:
     needs: build_and_test
