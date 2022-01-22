@@ -7,7 +7,7 @@ on:
     # run only on changes to these paths
     paths:
       - "src/api_auth/**"
-      - ".github/workflows/auth.yaml"
+      - ".github/workflows/auth.yml"
 
 jobs:
   test:
