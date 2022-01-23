@@ -44,5 +44,5 @@ jobs:
       - name: Push Docker Image
         run: |
           export TAG=`echo $GITHUB_REF | awk -F/ '{print $NF}'`
-          docker tag api_test "$REGISTRY_HOSTNAME/api_test:$TAG"
-          docker push "$REGISTRY_HOSTNAME/api_test:$TAG"
+          docker tag api_test "$REGISTRY_HOSTNAME/api_test:gh-actions"
+          docker push "$REGISTRY_HOSTNAME/api_test:gh-actions"

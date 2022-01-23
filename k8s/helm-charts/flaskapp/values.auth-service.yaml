@@ -1,9 +1,9 @@
 ServiceName: auth
-hasDatabase: true
+performDbMigration: true
 
 # Image info
 image:
-  tag: auth-image
+  tag: gcr.io/loyal-weaver-339004/istio-practice/api_auth:gh-actions
   pullPolicy: IfNotPresent
 
 # Env variables

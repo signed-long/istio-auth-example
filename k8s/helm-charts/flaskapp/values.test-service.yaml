@@ -7,5 +7,5 @@ env:
       value: development
 image:
   repository: test-image
-  tag: gcr.io/loyal-weaver-339004/istio-practice/api_test:latest
+  tag: gcr.io/loyal-weaver-339004/istio-practice/api_test:gh-actions
   pullPolicy: IfNotPresent
