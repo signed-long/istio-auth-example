@@ -23,4 +23,4 @@ WORKDIR /home/worker/src/app
 COPY --chown=worker:worker . /home/worker/src/app
 
 # run gunicorn server with one worker
-CMD ["gunicorn", "-w", "1", "-b", "0.0.0.0:5000", "run:app", "--capture-output", "--log-level", "debug"]
+CMD ["gunicorn", "-w", "1", "-b", "0.0.0.0:5000", "app:app", "--capture-output", "--log-level", "debug"]
