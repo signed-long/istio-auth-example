@@ -6,7 +6,7 @@ on:
       - main 
     # run only on changes to these paths
     paths:
-      - "src/${{ name }}/**"
+      - "src/api_auth/**"
       - ".github/workflows/auth.yml"
 
 env:
@@ -23,7 +23,7 @@ jobs:
       # Build and test image using docker compose
       - name: Run tests
         run: |-
-          docker-compose -f ./src/${{ name }}/tests/docker/docker-compose.tests.yml up --exit-code-from ${{ name }} --build
+          docker-compose -f ./src/api_auth/tests/docker/docker-compose.tests.yml up --exit-code-from api_auth --build
 
       # Authenticate to GCP
       - name: 'Authenticate to GCP'
@@ -44,5 +44,5 @@ jobs:
       - name: Push Docker Image
         run: |
           export TAG=`echo $GITHUB_REF | awk -F/ '{print $NF}'`
-          docker tag ${{ name }} "$REGISTRY_HOSTNAME/${{ name }}:gh-actions"
-          docker push "$REGISTRY_HOSTNAME/${{ name }}:gh-actions"
+          docker tag api_auth "$REGISTRY_HOSTNAME/api_auth:gh-actions"
+          docker push "$REGISTRY_HOSTNAME/api_auth:gh-actions"
