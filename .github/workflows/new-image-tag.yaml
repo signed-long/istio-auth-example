@@ -5,6 +5,8 @@ on:
 jobs:
   new-image-tag:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v3
         with:
@@ -13,11 +15,11 @@ jobs:
       - name: Update Image Version in the related HelmChart values.yaml
         uses: fjogeleit/yaml-update-action@main
         with:
-          valueFile: config/values.api_auth.yaml
+          valueFile: config/values.${{ github.event.client_payload.img }}.yaml
           propertyPath: 'image.tag'
           value: ${{ github.event.client_payload.tag }}
           branch: ${{ github.event.client_payload.base }}
           targetBranch: ${{ github.event.client_payload.target }}
           masterBranchName: main
           createPR: false
-          message: 'Update Image Tag to ${{ env.TAG }}' 
+          message: 'Update Image Tag to ${{ env.TAG }}'
