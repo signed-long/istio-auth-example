@@ -50,4 +50,4 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           event-type: new-image-tag
-          client-payload: '{"ref": "${{ github.ref }}", "base": "${{ github.base_ref }}", "target": "${{ github.head_ref }}" "img": "${{ env.IMAGE_NAME }}", "tag": "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_SHA }}"}'
+          client-payload: '{"ref": "${{ github.ref }}", "base": "${{ github.base_ref }}", "target": "${{ github.head_ref }}", "img": "${{ env.IMAGE_NAME }}", "tag": "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_SHA }}"}'
