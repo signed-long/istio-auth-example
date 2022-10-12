@@ -1,16 +1,17 @@
 name: "api_test"
 
 on:
-  push:
+  pull_request:
+    types: [opened, reopened, synchronize]
     branches:
-      - main 
+      - main
     # run only on changes to these paths
     paths:
       - "src/api_test/**"
       - ".github/workflows/auth.yml"
 
 env:
-  GITHUB_SHA: ${{ github.sha }} 
+  GITHUB_SHA: ${{ github.event.pull_request.head.sha }} 
   GITHUB_REF: ${{ github.ref }} 
   REGISTRY: ghcr.io/${{ github.actor }}
   IMAGE_NAME: api_test
@@ -21,7 +22,7 @@ jobs:
     permissions:
       packages: write
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
 
       # Build and test image using docker compose
       - name: Run tests
