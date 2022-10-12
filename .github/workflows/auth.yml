@@ -26,7 +26,7 @@ jobs:
       # Build and test image using docker compose
       - name: Run tests
         run: |-
-          docker-compose -f ./src/api_auth/tests/docker-compose.tests.yml up --exit-code-from api_auth --build
+          docker-compose -f ./src/${{ env.IMAGE_NAME }}/tests/docker-compose.tests.yml up --exit-code-from ${{ env.IMAGE_NAME }}_tests --build
 
       # Authenticate to GHCR
       - name: 'Authenticate to GHCR'
@@ -40,5 +40,5 @@ jobs:
       # Push image to GHCR
       - name: Push Docker Image
         run: |
-          docker tag ${{ env.IMAGE_NAME }} "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_SHA }}"
+          docker build src/${{ env.IMAGE_NAME }}/ --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_SHA }}
           docker push "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_SHA }}"
