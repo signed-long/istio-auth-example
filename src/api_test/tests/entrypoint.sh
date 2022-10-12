@@ -1,4 +1,7 @@
 #!/bin/bash
+echo "$SQL_HOST"
+
+
 
 if [[ ! -z SQL_HOST ]]
 then
