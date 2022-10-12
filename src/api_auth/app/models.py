@@ -1,5 +1,4 @@
 from app import db
-import pyotp
 from app import bcrypt
 import uuid
 from sqlalchemy.dialects.postgresql import UUID
