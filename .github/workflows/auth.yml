@@ -79,3 +79,4 @@ jobs:
           masterBranchName: main
           createPR: false
           message: 'Update Image Tag'
+          token: ${{ secrets.PAT }}
