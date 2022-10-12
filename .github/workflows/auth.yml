@@ -12,7 +12,7 @@ on:
 env:
   GITHUB_SHA: ${{ github.sha }} 
   GITHUB_REF: ${{ github.ref }} 
-  REGISTRY: ghcr.io
+  REGISTRY: ghcr.io/signed_long
   IMAGE_NAME: api_auth
 
 jobs:
