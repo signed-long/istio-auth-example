@@ -2,15 +2,14 @@ name: "api_auth"
 
 on:
   pull_request:
-    branches:
-      - main 
+    types: [opened, reopened]
     # run only on changes to these paths
     paths:
       - "src/api_auth/**"
       - ".github/workflows/auth.yml"
 
 env:
-  GITHUB_SHA: ${{ github.sha }} 
+  GITHUB_SHA: ${{ github.event.pull_request.head.sha }} 
   GITHUB_REF: ${{ github.ref }} 
   REGISTRY: ghcr.io/${{ github.actor }}
   IMAGE_NAME: api_auth
