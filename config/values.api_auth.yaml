@@ -1,7 +1,7 @@
 ServiceName: api-authentication
 performDbMigration: true
 image:
-  tag: ghcr.io/signed-long/api_auth:9c096545a4070208a62d4b258a5d1bd532f75e2c
+  tag: ghcr.io/signed-long/api_auth:latest
   pullPolicy: IfNotPresent
 env:
   - name: FLASK_APP

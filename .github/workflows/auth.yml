@@ -9,7 +9,6 @@ on:
     paths:
       - "src/api_auth/**"
       - ".github/workflows/auth.yml"
-      - "config/**"
 
 env:
   GITHUB_SHA: ${{ github.event.pull_request.head.sha }} 
@@ -25,20 +24,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: marceloprado/has-changed-path@v1
-        id: changed-config
-        with:
-          paths: "config/**"
-
-      # # Build and test image using docker compose
-      # - name: Run tests
-      #   if: steps.changed-config.outputs.changed != 'true'
-      #   run: |-
-      #     docker-compose -f ./src/${{ env.IMAGE_NAME }}/tests/docker-compose.tests.yml up --exit-code-from ${{ env.IMAGE_NAME }}_tests --build
+      # Build and test image using docker compose
+      - name: Run tests
+        run: |-
+          docker-compose -f ./src/${{ env.IMAGE_NAME }}/tests/docker-compose.tests.yml up --exit-code-from ${{ env.IMAGE_NAME }}_tests --build
 
       # Authenticate to GHCR
       - name: 'Authenticate to GHCR'
-        if: steps.changed-config.outputs.changed != 'true'
         id: 'auth'
         uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
         with:
@@ -48,35 +40,29 @@ jobs:
       
       # Push image to GHCR
       - name: Push Docker Image
-        if: steps.changed-config.outputs.changed != 'true'
         run: |
           docker build src/${{ env.IMAGE_NAME }}/ --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_SHA }}
           docker push "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_SHA }}"
 
-  update_helm_tags:
-    runs-on: ubuntu-latest
-    needs: build_test_push
-    permissions:
-      contents: write
-    steps:
-      - uses: marceloprado/has-changed-path@v1
-        id: changed-config
-        with:
-          paths: "config/**"
+  # This will push a commit to to the PR, and not-retrigger this workflow, leaving the PR in an unmergable state. 
+  # For now just don't automate this and use :latest tag in helm values file.
 
-      - uses: actions/checkout@v3
-        if: steps.changed-config.outputs.changed != 'true'
+  # update_helm_tags:
+  #   runs-on: ubuntu-latest
+  #   needs: build_test_push
+  #   permissions:
+  #     contents: write
+  #   steps:
+  #     - uses: actions/checkout@v3
 
-      - name: Update tag in helm values file
-        uses: fjogeleit/yaml-update-action@main
-        if: steps.changed-config.outputs.changed != 'true'
-        with:
-          valueFile: config/values.${{ env.IMAGE_NAME }}.yaml
-          propertyPath: 'image.tag'
-          value: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_SHA }}
-          branch: ${{ github.head_ref }} 
-          targetBranch: ${{ github.base_ref }} 
-          masterBranchName: main
-          createPR: false
-          message: 'Update Image Tag'
-          token: ${{ secrets.PAT }}
+  #     - name: Update tag in helm values file
+  #       uses: fjogeleit/yaml-update-action@main
+  #       with:
+  #         valueFile: config/values.${{ env.IMAGE_NAME }}.yaml
+  #         propertyPath: 'image.tag'
+  #         value: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_SHA }}
+  #         branch: ${{ github.head_ref }} 
+  #         targetBranch: ${{ github.base_ref }} 
+  #         masterBranchName: main
+  #         createPR: false
+  #         message: 'Update Image Tag'
