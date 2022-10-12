@@ -2,8 +2,7 @@
 echo "$SQL_HOST"
 
 
-
-if [[ ! -z SQL_HOST ]]
+if [ -z ${SQL_HOST+x} ]
 then
   echo "Waiting for postgres..."
   while ! nc -z $SQL_HOST $SQL_PORT; do
