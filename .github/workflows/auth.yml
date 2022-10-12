@@ -56,6 +56,6 @@ jobs:
           propertyPath: 'image.tag'
           value: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_SHA }}
           branch: ${{ steps.extract_branch.outputs.branch }}
-          commitChange: false
+          commitChange: true 
           updateFile: true
           message: 'Update Image Tag to ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_SHA }}' 
