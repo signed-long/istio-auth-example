@@ -25,9 +25,9 @@ jobs:
       - uses: actions/checkout@v1
 
       # Build and test image using docker compose
-      - name: Run tests
-        run: |-
-          docker-compose -f ./src/${{ env.IMAGE_NAME }}/tests/docker-compose.tests.yml up --exit-code-from ${{ env.IMAGE_NAME }}_tests --build
+      # - name: Run tests
+      #   run: |-
+      #     docker-compose -f ./src/${{ env.IMAGE_NAME }}/tests/docker-compose.tests.yml up --exit-code-from ${{ env.IMAGE_NAME }}_tests --build
 
       # Authenticate to GHCR
       - name: 'Authenticate to GHCR'
