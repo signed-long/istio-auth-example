@@ -1,7 +1,7 @@
 name: "api_auth"
 
 on:
-  push:
+  pull_request:
     branches:
       - main 
     # run only on changes to these paths
@@ -42,3 +42,19 @@ jobs:
         run: |
           docker build src/${{ env.IMAGE_NAME }}/ --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_SHA }}
           docker push "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_SHA }}"
+      
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+
+      - name: Update Image Version in the related HelmChart values.yaml
+        uses: fjogeleit/yaml-update-action@main
+        with:
+          valueFile: 'config/values.&{{ env.IMAGE_NAME }}.yaml'
+          propertyPath: 'image.tag'
+          value: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_SHA }}
+          branch: ${{ steps.extract_branch.outputs.branch }}
+          commitChange: false
+          updateFile: true
+          message: 'Update Image Tag to ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_SHA }}' 
