@@ -2,8 +2,10 @@
 version: '3.3'
 services:
   api_auth:
-    build: ../../
-    command: bash tests/docker/entrypoint.sh
+    build: 
+      context: ../
+      dockerfile: tests/Dockerfile
+    command: bash /home/worker/src/app/docker-compose/entrypoint.sh  python -m pytest
     image: api_auth
     environment:
       - FLASK_APP=app/__init__.py

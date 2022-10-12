@@ -10,6 +10,9 @@ COPY ./Pipfile .
 COPY ./Pipfile.lock .
 RUN PIPENV_VENV_IN_PROJECT=1 pipenv install --deploy
 
+# install system dependencies
+RUN apt-get update && apt-get install -y netcat
+
 FROM builder as final
 
 # Grab packages from builder
@@ -21,8 +24,4 @@ RUN useradd -u 420 worker
 USER worker
 WORKDIR /home/worker/src/app
 
-COPY --chown=worker:worker ./app /home/worker/src/app/app
-COPY --chown=worker:worker ./migrations /home/worker/src/app/migrations
-
-# run gunicorn server with one worker
-CMD ["gunicorn", "-w", "1", "-b", "0.0.0.0:5000", "app:app", "--capture-output", "--log-level", "debug"]
+COPY --chown=worker:worker . /home/worker/src/app

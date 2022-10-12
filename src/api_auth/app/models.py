@@ -21,7 +21,6 @@ class User(db.Model):
     date_created = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     email = db.Column(db.String(128), unique=True, nullable=False)
     password_hash = db.Column(db.String(60), nullable=False)
-    # test = db.Column(db.String(60))
 
     def __init__(self, email, password):
         '''
