@@ -1,5 +1,4 @@
 from app.models import User
-import pyotp
 
 
 def test_new_user():
