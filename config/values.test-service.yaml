@@ -1,0 +1,11 @@
+ServiceName: api-test
+performDbMigration: false
+env:
+    - name: FLASK_APP
+      value: app/__init__.py
+    - name: FLASK_ENV
+      value: development
+image:
+  repository: test-image
+  tag: test-image
+  pullPolicy: IfNotPresent
