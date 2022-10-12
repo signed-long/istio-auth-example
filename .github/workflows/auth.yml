@@ -57,5 +57,6 @@ jobs:
           value: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_SHA }}
           branch: ${{ steps.extract_branch.outputs.branch }}
           masterBranchName: main
+          createPR: false
           commitChange: true 
           message: 'Update Image Tag to ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_SHA }}' 
