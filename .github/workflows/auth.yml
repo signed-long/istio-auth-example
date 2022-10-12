@@ -36,17 +36,9 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
-      # Authenticate to GHCR
-      - name: 'Authenticate to GHCR'
-        run: |
-          echo $GITHUB_TOKEN | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
       # Push image to GHCR
       - name: Push Docker Image
         run: |
-          export TAG=`echo $GITHUB_REF | awk -F/ '{print $NF}'`
-          docker tag ${{ env.IMAGE_NAME }} "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$TAG"
-          docker push "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$TAG"
+          docker tag ${{ env.IMAGE_NAME }} "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_SHA }}"
+          docker push "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_SHA }}"
