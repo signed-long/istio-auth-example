@@ -43,11 +43,7 @@ jobs:
         run: |
           docker build src/${{ env.IMAGE_NAME }}/ --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_SHA }}
           docker push "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_SHA }}"
-      
-      - name: Extract branch name
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-        id: extract_branch
+    
 
       - name: Update Image Version in the related HelmChart values.yaml
         uses: fjogeleit/yaml-update-action@main
@@ -55,10 +51,9 @@ jobs:
           valueFile: config/values.api_auth.yaml
           propertyPath: 'image.tag'
           value: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_SHA }}
-          branch: ${{ steps.extract_branch.outputs.branch }}
-          targetBranch: main
+          branch: ${{ github.head_ref }}
+          targetBranch: ${{ github.base_ref }}
           masterBranchName: main
           createPR: false
           message: 'Update Image Tag to ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_SHA }}' 
           token: ${{ secrets.GITHUB_TOKEN }}
-          repository: signed-long/istio-auth-example
