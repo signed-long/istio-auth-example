@@ -12,37 +12,41 @@ on:
 env:
   GITHUB_SHA: ${{ github.sha }} 
   GITHUB_REF: ${{ github.ref }} 
-  REGISTRY_HOSTNAME: gcr.io/loyal-weaver-339004/istio-practice 
+  REGISTRY: ghcr.io
+  IMAGE_NAME: api_auth
 
 jobs:
   build_test_push:
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
     steps:
       - uses: actions/checkout@v1
 
       # Build and test image using docker compose
       - name: Run tests
         run: |-
-          docker-compose -f ./src/api_auth/tests/docker/docker-compose.tests.yml up --exit-code-from api_auth --build
+          docker-compose -f ./src/api_auth/tests/docker-compose.tests.yml up --exit-code-from api_auth --build
 
-      # Authenticate to GCP
-      - name: 'Authenticate to GCP'
+      # Authenticate to GHCR
+      - name: 'Authenticate to GHCR'
         id: 'auth'
-        uses: 'google-github-actions/auth@v0'
+        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
         with:
-          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-      - name: 'Set up Cloud SDK'
-        uses: 'google-github-actions/setup-gcloud@v0'
-          
-      # Configure docker to use the gcloud command-line tool as a credential helper
-      - name: 'Login to docker with gcloud'
-        run: |
-          gcloud auth configure-docker -q
-
-      # Push image to Google Container Registry
-      - name: Push Docker Image
-        run: |
-          export TAG=`echo $GITHUB_REF | awk -F/ '{print $NF}'`
-          docker tag api_auth "$REGISTRY_HOSTNAME/api_auth:gh-actions"
-          docker push "$REGISTRY_HOSTNAME/api_auth:gh-actions"
+      - name: Build and push Docker image
+        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}

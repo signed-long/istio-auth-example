@@ -26,23 +26,23 @@ jobs:
           docker-compose -f ./src/api_test/tests/docker/docker-compose.tests.yml up --exit-code-from api_test --build
 
       # Authenticate to GCP
-      - name: 'Authenticate to GCP'
-        id: 'auth'
-        uses: 'google-github-actions/auth@v0'
-        with:
-          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+      # - name: 'Authenticate to GCP'
+      #   id: 'auth'
+      #   uses: 'google-github-actions/auth@v0'
+      #   with:
+      #     credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
 
-      - name: 'Set up Cloud SDK'
-        uses: 'google-github-actions/setup-gcloud@v0'
+      # - name: 'Set up Cloud SDK'
+      #   uses: 'google-github-actions/setup-gcloud@v0'
           
-      # Configure docker to use the gcloud command-line tool as a credential helper
-      - name: 'Login to docker with gcloud'
-        run: |
-          gcloud auth configure-docker -q
+      # # Configure docker to use the gcloud command-line tool as a credential helper
+      # - name: 'Login to docker with gcloud'
+      #   run: |
+      #     gcloud auth configure-docker -q
 
-      # Push image to Google Container Registry
-      - name: Push Docker Image
-        run: |
-          export TAG=`echo $GITHUB_REF | awk -F/ '{print $NF}'`
-          docker tag api_test "$REGISTRY_HOSTNAME/api_test:gh-actions"
-          docker push "$REGISTRY_HOSTNAME/api_test:gh-actions"
+      # # Push image to Google Container Registry
+      # - name: Push Docker Image
+      #   run: |
+      #     export TAG=`echo $GITHUB_REF | awk -F/ '{print $NF}'`
+      #     docker tag api_test "$REGISTRY_HOSTNAME/api_test:gh-actions"
+      #     docker push "$REGISTRY_HOSTNAME/api_test:gh-actions"
