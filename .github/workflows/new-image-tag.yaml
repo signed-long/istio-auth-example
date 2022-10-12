@@ -1,10 +1,13 @@
-name: "Repository Dispatch: new-image-tag"
+name: Update helm tags
 on:
-  repository_dispatch:
-    types: [new-image-tag]
+  pull_request:
+    branches:
+      - main
+    types: [closed]
 jobs:
   new-image-tag:
     runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
     permissions:
       contents: write
     steps:
