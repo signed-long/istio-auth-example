@@ -44,9 +44,3 @@ jobs:
           docker build src/${{ env.IMAGE_NAME }}/ --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_SHA }}
           docker push "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_SHA }}"
     
-      - name: Repository Dispatch
-        uses: peter-evans/repository-dispatch@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          event-type: new-image-tag
-          client-payload: '{"ref": "${{ github.ref }}", "base": "${{ github.base_ref }}", "target": "${{ github.head_ref }}", "img": "${{ env.IMAGE_NAME }}", "tag": "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_SHA }}"}'
