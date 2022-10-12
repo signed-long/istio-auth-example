@@ -56,4 +56,3 @@ jobs:
           masterBranchName: main
           createPR: false
           message: 'Update Image Tag to ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_SHA }}' 
-          token: ${{ secrets.GITHUB_TOKEN }}
