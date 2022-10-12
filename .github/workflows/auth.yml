@@ -1,8 +1,7 @@
 name: "api_auth"
 
 on:
-  pull_request:
-    types: [opened, reopened, edited]
+  pull_request_target:
     branches:
       - main
     # run only on changes to these paths
