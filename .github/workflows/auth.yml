@@ -52,7 +52,7 @@ jobs:
       - name: Update Image Version in the related HelmChart values.yaml
         uses: fjogeleit/yaml-update-action@main
         with:
-          valueFile: config/values.&{{ env.IMAGE_NAME }}.yaml
+          valueFile: config/values.api_auth.yaml
           propertyPath: 'image.tag'
           value: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_SHA }}
           branch: ${{ steps.extract_branch.outputs.branch }}
