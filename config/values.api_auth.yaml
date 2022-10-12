@@ -1,25 +1,32 @@
 ServiceName: api-authentication
-performDbMigration: true
+performDbMigration: true 
+
+# Image info
 image:
-  tag: ghcr.io/signed-long/api_auth:3c4009a864fd26231bb5d5643466cec0a60d6569
+  tag: auth-image
   pullPolicy: IfNotPresent
+
+# Env variables
 env:
-  - name: FLASK_APP
-    value: app/__init__.py
-  - name: FLASK_ENV
-    value: development
-  - name: SQL_HOST
-    value: db-postgresql-nyc1-45905-do-user-9591008-0.b.db.ondigitalocean.com
-  - name: SQL_PORT
-    value: 25060
-  - name: DATABASE
-    value: defaultdb
-  - name: DATABASE_USER
-    value: doadmin
-  - name: ACCESS_TOKEN_EXP_SEC
-    value: 900
-  - name: ACCESS_TOKEN_ISS
-    value: example.com
+    - name: FLASK_APP
+      value: app/__init__.py
+    - name: FLASK_ENV
+      value: development
+    - name: SQL_HOST
+      value: db-postgresql-nyc1-45905-do-user-9591008-0.b.db.ondigitalocean.com
+    - name: SQL_PORT
+      value: 25060
+    - name: DATABASE
+      value: defaultdb
+    - name: DATABASE_USER
+      value: doadmin
+    - name: ACCESS_TOKEN_EXP_SEC
+      value: 900 # access token expires in 15 mins
+    - name: ACCESS_TOKEN_ISS
+      value: example.com
+
+# Secrets specific to this application, to be passed in as env variables
+# Must be applied manually to cluster before deployment of this service, see ../secrets/secrets.yml.example 
 appSecrets:
   - secretName: database-password
     envName: DATABASE_PASSWORD
@@ -29,10 +36,16 @@ appSecrets:
     envName: ACCESS_TOKEN_PRIVATE_KEY
     type: Opaque
     keyName: private-key
+    
+
+# Secrets specific to this application, to be passed in as env variables
+# Must be applied manually to cluster before deployment of this service, see ../secrets/secrets.yml.example 
 migrationSecrets:
   - secretName: migration-database-password
     envName: DATABASE_PASSWORD
     type: Opaque
     keyName: password
+
 migrationJob:
+  # Should the job be rescheduled on the same node if it fails, or just stopped
   restartPolicy: Never
