@@ -5,7 +5,7 @@ services:
     build: 
       context: ../
       dockerfile: tests/Dockerfile
-    command: bash /home/worker/src/app/docker-compose/entrypoint.sh  python -m pytest
+    command: bash /home/worker/src/app/tests/entrypoint.sh python -m pytest
     image: api_auth
     environment:
       - FLASK_APP=app/__init__.py
