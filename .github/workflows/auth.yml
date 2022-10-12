@@ -2,16 +2,13 @@ name: "api_auth"
 
 on:
   pull_request:
-    types: [opened, reopened]
+    types: [opened, reopened, edited]
     branches:
       - main
     # run only on changes to these paths
     paths:
       - "src/api_auth/**"
       - ".github/workflows/auth.yml"
-  push:
-    branches:
-    - main
 
 env:
   GITHUB_SHA: ${{ github.event.pull_request.head.sha }} 
