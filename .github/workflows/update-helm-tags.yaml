@@ -13,16 +13,24 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          ref: ${{ github.event.client_payload.ref }}
+          fetch-depth: 2
+
+      - name: Get changed files in the src folder
+        id: changed-files-specific
+        uses: tj-actions/changed-files@v32
+        with:
+          files: |
+            src/api_auth/**
 
       - name: Update Image Version in the related HelmChart values.yaml
+        if: steps.changed-files-specific.outputs.any_changed == 'true
         uses: fjogeleit/yaml-update-action@main
         with:
-          valueFile: config/values.${{ github.event.client_payload.img }}.yaml
+          valueFile: config/values.api_auth.yaml
           propertyPath: 'image.tag'
-          value: ${{ github.event.client_payload.tag }}
-          branch: ${{ github.event.client_payload.base }}
-          targetBranch: ${{ github.event.client_payload.target }}
+          value: ghcr.io/signed-long/api_auth:${{ github.event.pull_request.head.sha }} 
+          branch: ${{ github.event.pull_request.base }} 
+          targetBranch: main
           masterBranchName: main
           createPR: false
-          message: 'Update Image Tag to ${{ env.TAG }}'
+          message: 'Update Image Tag'
