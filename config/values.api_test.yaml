@@ -8,4 +8,4 @@ env:
 image:
   repository: test-image
   tag: ghcr.io/signed-long/api_test:latest
-  pullPolicy: IfNotPresent
+  pullPolicy: Always

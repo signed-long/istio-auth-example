@@ -11,13 +11,14 @@ metadata:
   annotations:
     "helm.sh/hook": pre-install
     # "helm.sh/hook-delete-policy": hook-succeeded
-    sidecar.istio.io/inject: "false"
 spec:
   backoffLimit: 1
   template:
     metadata:
       labels:
         app: {{ .Release.Name }}-{{ .Chart.Name }}
+      annotations:
+        sidecar.istio.io/inject: "false"
     spec:
       containers:
       - name: {{ .Chart.Name }}

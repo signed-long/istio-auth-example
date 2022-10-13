@@ -1,8 +1,8 @@
 ServiceName: api-authentication
 performDbMigration: true
 image:
-  tag: ghcr.io/signed-long/api_auth:latest
-  pullPolicy: IfNotPresent
+  tag: ghcr.io/signed-long/api_auth:latest 
+  pullPolicy: Always
 env:
   - name: FLASK_APP
     value: app/__init__.py
@@ -19,6 +19,8 @@ env:
   - name: ACCESS_TOKEN_EXP_SEC
     value: 900
   - name: ACCESS_TOKEN_ISS
+    value: example.com
+  - name: SUM_ELSE
     value: example.com
 appSecrets:
   - secretName: database-password
