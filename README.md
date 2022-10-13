@@ -32,8 +32,8 @@ The application consists of an authentication service and a test service. The te
 
 - Follow the steps in the [istio docs](https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/) to expose the ingress gateway to external traffic, as well as set $INGRESS_HOST and $INGRESS_PORT.
 
-```
-$ curl $INGRESS_HOST:$INGRESS_PORT/public/hello
+```bash
+curl $INGRESS_HOST:$INGRESS_PORT/public/hello
 {
   "data": {},
   "http_response": {
@@ -43,12 +43,12 @@ $ curl $INGRESS_HOST:$INGRESS_PORT/public/hello
 }
 ```
 
-```
+```bash
 $ curl $INGRESS_HOST:$INGRESS_PORT/private/hello
 RBAC: access denied
 ```
 
-```
+```bash
 $ curl -X POST $INGRESS_HOST:$INGRESS_PORT/auth/register \
 	-d '{"email":"me@email.ca", "password":"super-strong-password"}' \
 	--header 'Content-Type: application/json'
@@ -61,7 +61,7 @@ $ curl -X POST $INGRESS_HOST:$INGRESS_PORT/auth/register \
 }
 ```
 
-```
+```bash
 $ curl -X POST $INGRESS_HOST:$INGRESS_PORT/auth/login \
 	-d '{"email":"me@email.ca", "password":"super-strong-password"}' \
 	--header 'Content-Type: application/json'
@@ -76,7 +76,7 @@ $ curl -X POST $INGRESS_HOST:$INGRESS_PORT/auth/login \
 }
 ```
 
-```
+```bash
 $ curl $INGRESS_HOST:$INGRESS_PORT/private/hello \
 	--header 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmYzFmNGMyNi1lNWYxLTRhOWQtOTQ5Yi1kOGM2ZmE4ZDE4NzMiLCJleHAiOjE2NjU2NDgwMTAsImlzcyI6ImV4YW1wbGUuY29tIn0.UWpHFmCrOG-01tr42ElOGNEClflLrJqhSOdxbdsJXvZWW2kdGlkGNiBvLIu4cledJHzsrZpAh04R2Js3MqgPnJdKQKKcijinQmm-qOG0oecgqTFroImvvGS7g-4GwypGLauUp0tj23zUap-VeTs5m9xPA8k3CkY7w4wmTlA6H7YpYb7KRGMLO2ZpttH0gUJjLZGWF2BbnW4mpUYxVznAm55vub-_bqzwF_ENKAC1ylmFjVatVdV_YnEAlsktG1JvAik5yrhFuV_jpomRw-NYYWmMuH4To4TuCraRsemkGkdqvtMvTGJq-N0jjdWL-ndhuVxtsHFooPpyO5EjSeCQhc92Zv6Lav4y90ayK1RmeMW0WDB1Bc7JJoBrplKpHcJrCqHVst4ovbYxTWqJb_ALXjClJLKIubddqHiHYN_EFCZ-ZXZ0PtUvlNCXW6pUtYzZ5XeJzz_vYahMtNDOCFbSbzZqstT5utCmBOxV6zrD452TzfDj3_q_uEnsLMYe3cJ-'
 {
