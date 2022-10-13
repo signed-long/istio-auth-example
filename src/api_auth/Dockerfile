@@ -24,5 +24,7 @@ WORKDIR /home/worker/src/app
 COPY --chown=worker:worker ./app /home/worker/src/app/app
 COPY --chown=worker:worker ./migrations /home/worker/src/app/migrations
 
+RUN mkdir -p /home/worker/src/app/migrations/versions
+
 # run gunicorn server with one worker
 CMD ["gunicorn", "-w", "1", "-b", "0.0.0.0:5000", "app:app", "--capture-output", "--log-level", "debug"]
