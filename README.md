@@ -1,6 +1,8 @@
 ## Istio End-User Authentication Example
 
-This project is a proof-of-concept using Istio's Ingress Gateway, and Authorization Policy resources used to move authorization logic out of application code for a simple microservice applciation running on kubernetes.
+This project is a proof-of-concept using Istio's Ingress Gateway, and Authorization Policy resources in order to move authorization logic out of application code. 
+
+The application consists of an authentication service and a test service. The test service has routes with `/private` and `/public` prefixes, only authenticated users should be able to access `/private` routes.
 
 ### Prereqs
 
@@ -76,7 +78,7 @@ $ curl -X POST $INGRESS_HOST:$INGRESS_PORT/auth/login \
 
 ```
 $ curl $INGRESS_HOST:$INGRESS_PORT/private/hello \
-	--header 'Authorization: Bearer 	eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmYzFmNGMyNi1lNWYxLTRhOWQtOTQ5Yi1kOGM2ZmE4ZDE4NzMiLCJleHAiOjE2NjU2NDgwMTAsImlzcyI6ImV4YW1wbGUuY29tIn0.UWpHFmCrOG-01tr42ElOGNEClflLrJqhSOdxbdsJXvZWW2kdGlkGNiBvLIu4cledJHzsrZpAh04R2Js3MqgPnJdKQKKcijinQmm-qOG0oecgqTFroImvvGS7g-4GwypGLauUp0tj23zUap-VeTs5m9xPA8k3CkY7w4wmTlA6H7YpYb7KRGMLO2ZpttH0gUJjLZGWF2BbnW4mpUYxVznAm55vub-_bqzwF_ENKAC1ylmFjVatVdV_YnEAlsktG1JvAik5yrhFuV_jpomRw-NYYWmMuH4To4TuCraRsemkGkdqvtMvTGJq-N0jjdWL-ndhuVxtsHFooPpyO5EjSeCQhc92Zv6Lav4y90ayK1RmeMW0WDB1Bc7JJoBrplKpHcJrCqHVst4ovbYxTWqJb_ALXjClJLKIubddqHiHYN_EFCZ-ZXZ0PtUvlNCXW6pUtYzZ5XeJzz_vYahMtNDOCFbSbzZqstT5utCmBOxV6zrD452TzfDj3_q_uEnsLMYe3cJ-'
+	--header 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmYzFmNGMyNi1lNWYxLTRhOWQtOTQ5Yi1kOGM2ZmE4ZDE4NzMiLCJleHAiOjE2NjU2NDgwMTAsImlzcyI6ImV4YW1wbGUuY29tIn0.UWpHFmCrOG-01tr42ElOGNEClflLrJqhSOdxbdsJXvZWW2kdGlkGNiBvLIu4cledJHzsrZpAh04R2Js3MqgPnJdKQKKcijinQmm-qOG0oecgqTFroImvvGS7g-4GwypGLauUp0tj23zUap-VeTs5m9xPA8k3CkY7w4wmTlA6H7YpYb7KRGMLO2ZpttH0gUJjLZGWF2BbnW4mpUYxVznAm55vub-_bqzwF_ENKAC1ylmFjVatVdV_YnEAlsktG1JvAik5yrhFuV_jpomRw-NYYWmMuH4To4TuCraRsemkGkdqvtMvTGJq-N0jjdWL-ndhuVxtsHFooPpyO5EjSeCQhc92Zv6Lav4y90ayK1RmeMW0WDB1Bc7JJoBrplKpHcJrCqHVst4ovbYxTWqJb_ALXjClJLKIubddqHiHYN_EFCZ-ZXZ0PtUvlNCXW6pUtYzZ5XeJzz_vYahMtNDOCFbSbzZqstT5utCmBOxV6zrD452TzfDj3_q_uEnsLMYe3cJ-'
 {
     "data": {},
     "http_response": {
