@@ -33,7 +33,7 @@ The application consists of an authentication service and a test service. The te
 - Follow the steps in the [istio docs](https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/) to expose the ingress gateway to external traffic, as well as set $INGRESS_HOST and $INGRESS_PORT.
 
 ```bash
-curl $INGRESS_HOST:$INGRESS_PORT/public/hello
+$ curl $INGRESS_HOST:$INGRESS_PORT/public/hello
 {
   "data": {},
   "http_response": {
