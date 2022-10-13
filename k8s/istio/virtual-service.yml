@@ -17,7 +17,7 @@ spec:
     - destination:
         port:
           number: 80
-        host: auth-flaskapp-service
+        host: api-auth-flaskapp-service
   - match:
     - uri:
         prefix: /private
@@ -27,4 +27,4 @@ spec:
     - destination:
         port:
           number: 80
-        host: test-flaskapp-service
+        host: api-test-flaskapp-service
