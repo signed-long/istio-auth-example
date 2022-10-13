@@ -20,8 +20,6 @@ env:
     value: 900
   - name: ACCESS_TOKEN_ISS
     value: example.com
-  - name: SUM_ELSE
-    value: example.com
 appSecrets:
   - secretName: database-password
     envName: DATABASE_PASSWORD
