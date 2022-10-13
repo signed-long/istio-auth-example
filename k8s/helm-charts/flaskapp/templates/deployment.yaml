@@ -21,6 +21,8 @@ spec:
       labels:
         app: {{ .Release.Name }}-{{ .Chart.Name }}
     spec:
+      imagePullSecrets:
+        - name: dockerconfigjson-ghcr
       containers:
         - name: {{ .Release.Name }}-{{ .Chart.Name }}
           image: {{ .Values.image.tag }}
