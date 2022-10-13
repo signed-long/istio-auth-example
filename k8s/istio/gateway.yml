@@ -4,6 +4,8 @@ apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
   name: auth-example-gateway
+  labels:
+    app: istio-auth-example
 spec:
   selector:
     istio: ingressgateway  # use Istio default gateway implementation

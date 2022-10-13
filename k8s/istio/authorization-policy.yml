@@ -3,29 +3,59 @@
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
-  name: "jwt-ingress-policy"
+  name: "auth-policy"
+  labels:
+    app: istio-auth-example
 spec:
   selector:
     matchLabels:
-      istio: ingressgateway
+      app: istio-auth-example
   action: ALLOW
   rules:
   - to:
     - operation:
+        paths: ["/auth/*"]
+    - operation:
+        paths: ["/public/*"]
+  - to:
+    - operation:
         paths: ["/private/*"]
     when:
-    - key: request.auth.claims[permissions]
-      values: ["private"]
+    - key: request.auth.claims[iss]
+      values: ["example.com"]
+
+# ---
+
+# apiVersion: security.istio.io/v1beta1
+# kind: AuthorizationPolicy
+# metadata:
+#   name: "public-auth-policy"
+# spec:
+#   selector:
+#     matchLabels:
+#       istio: ingressgateway
+#   action: ALLOW
+#   rules:
+#   - to:
+#     - operation:
+#         paths: ["/auth/*"]
+#     - operation:
+#         paths: ["/public/*"]
+#     # - operation:
+#     #     paths: ["/private/*"]
+
 ---
 
 apiVersion: security.istio.io/v1beta1
 kind: RequestAuthentication
 metadata:
-  name: "jwt-request-authn"
+  name: "auth-policy"
+  labels:
+    app: istio-auth-example
 spec:
   selector:
     matchLabels:
-      istio: ingressgateway
+      app: istio-auth-example
   jwtRules:
   - issuer: "example.com"
     jwksUri: "https://raw.githubusercontent.com/signed-long/jwks_host/main/jwks.json"

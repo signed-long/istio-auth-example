@@ -5,7 +5,8 @@ kind: ConfigMap
 metadata:
   name: {{ .Release.Name }}-{{ .Chart.Name }}-configmap
   labels:
-    app: {{ .Release.Name }}-{{ .Chart.Name }}
+    service: {{ .Release.Name }}-{{ .Chart.Name }}
+    app: istio-auth-example
     chart: '{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}'
 data:
   {{- range .Values.env }}
