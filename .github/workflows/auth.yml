@@ -42,7 +42,7 @@ jobs:
       - name: Push Docker Image
         run: |
           docker build src/${{ env.IMAGE_NAME }}/ --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }} --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_SHA }}
-          docker push "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GITHUB_SHA }}"
+          docker push "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}"
 
   # This will push a commit to to the PR, and not-retrigger this workflow, leaving the PR in an unmergable state. 
   # For now just don't automate this and use :latest tag in helm values file.
