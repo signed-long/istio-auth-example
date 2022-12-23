@@ -1,6 +1,6 @@
 ## Istio End-User Authentication Example
 
-This project is a proof-of-concept using Istio's Ingress Gateway, and Authorization Policy resources in order to move authorization logic out of application code. 
+This project is a proof-of-concept using Istio's Ingress Gateway, and Authorization Policy resources in order to move authorization logic out of application code.
 
 The application consists of an authentication service and a test service. The test service has routes with `/private` and `/public` prefixes, only authenticated users should be able to access `/private` routes.
 
@@ -9,9 +9,9 @@ The application consists of an authentication service and a test service. The te
 - Install kubectl and point it to a kubernetes cluster (I did all testing on [minikube](https://minikube.sigs.k8s.io/docs/start/))
 - Follow steps in the [istio getting started page](https://istio.io/latest/docs/setup/getting-started/) to install istio on your cluster and inject sidecar containers
 - Install [helm](https://helm.sh/docs/intro/install/)
-- Have a postgresql database server up and running, I used a [Digital Ocean managed postgres](https://docs.digitalocean.com/products/databases/postgresql/) instance
-- Update values files in [config/](config/), and [k8s/secrets/secrets.yml](k8s/secrets/secrets.yml.example) to use this database
 - [Configure cluster](https://dev.to/asizikov/using-github-container-registry-with-kubernetes-38fb) to be able to pull container images from github's container registry
+- (minikube) Create an External service to allow pods to access the host `k create service externalname minikube --external-name=host.minikube.internal`
+- Set up backing services by running `docker compose up` from [services/](services/)
 
 ### Deploying app to cluster:
 

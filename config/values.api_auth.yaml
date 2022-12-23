@@ -9,13 +9,13 @@ env:
   - name: FLASK_ENV
     value: development
   - name: SQL_HOST
-    value: db-postgresql-nyc1-45905-do-user-9591008-0.b.db.ondigitalocean.com
+    value: minikube
   - name: SQL_PORT
-    value: 25060
+    value: 5432
   - name: DATABASE
-    value: defaultdb
+    value: docker-compose
   - name: DATABASE_USER
-    value: doadmin
+    value: db_user
   - name: ACCESS_TOKEN_EXP_SEC
     value: 900
   - name: ACCESS_TOKEN_ISS
