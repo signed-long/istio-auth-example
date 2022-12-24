@@ -11,3 +11,15 @@ services:
       - "5432:5432"
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
+  vault:
+    image: vault:latest
+    ports:
+      - "8200:8200"
+    environment:
+      VAULT_ADDR: "http://0.0.0.0:8200"
+      VAULT_DEV_ROOT_TOKEN_ID: "root-token"
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - ./file:/vault/file:rw
+      - ./config:/vault/config:rw
