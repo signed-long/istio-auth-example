@@ -38,4 +38,4 @@ spec:
       app: istio-auth-example
   jwtRules:
   - issuer: "example.com"
-    jwksUri: "https://raw.githubusercontent.com/signed-long/jwks_host/main/jwks.json"
+    jwksUri: "https://raw.githubusercontent.com/signed-long/istio-auth-example/main/jwks.json"
